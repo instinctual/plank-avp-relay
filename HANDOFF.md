@@ -1,4 +1,4 @@
-# PLANK AVP Relay and Setup app
+# PLANK AVP Relay
 
 ## Current development — approved icon and app naming
 
@@ -19,8 +19,24 @@ opaque background. The earlier tablet drawing SVG was removed. The bundle ID,
 pairing namespace, shared DrawingRegistration group and Client launch URL scheme
 remain the current ones, so this naming cleanup does not require reauthorization.
 Historical release artifacts keep their original names and source provenance.
-Fresh Apple build/archive/export verification is pending. The published release
-remains 0.6.8 / build 40; these icon/naming changes have not been uploaded.
+The frozen drawing fixture manifest also retains its upstream command spelling;
+changing that byte sequence breaks the cross-project conformance hash. Its local
+README documents the renamed command, and the original manifest hash is retained.
+
+Validation from source `2eb5849e731170f5d664044f36af1f8aaf0c3db7` passes all
+27 Apple suites and all 14 offline metadata-helper tests. macOS and visionOS
+simulator/device builds, signed archive/export, bundle metadata and dSYM checks
+pass. Both generated icon layers are 1024×1024; the foreground has alpha and the
+background is opaque. The exported app's name, canonical identity, private/shared
+Keychain groups and Client launch URL scheme were checked. The renamed metadata
+helper also passed a read-only check of the existing build using its new private
+config filename. Source, archive, IPA, hashes, icon previews and verification logs
+are in `artifacts/app-validation/0.6.8/icon-naming/`. The one-time signing job was
+unloaded after completion.
+
+The local validation archive uses 0.6.8 / build 41 and has not been uploaded or
+installed. The published release remains 0.6.8 / build 40; these icon/naming
+changes are ready for a subsequent app delivery. No new GitHub release was made.
 
 ## Current state — 0.6.8 / build 40 released October 7, 2026
 
@@ -49,7 +65,7 @@ release metadata and native validation logs are in `artifacts/releases/0.6.8/`.
 TestFlight: PLANK AVP Relay, bundle `la.instinctual.PLANK.AVPrelay`, app record
 `6818323499`, version 0.6.8, build 40. Upload succeeded October 8 at 00:50:42 UTC
 (October 7 locally). Apple reports VALID and IN_BETA_TESTING internally. The
-notes in `apps/tablet-setup/TestFlight/0.6.8-40.txt` and the confirmed Standard /
+notes in `apps/avp-relay/TestFlight/0.6.8-40.txt` and the confirmed Standard /
 No France compliance baseline were saved and verified. Both existing PLANK
 Testing groups have build access. External distribution was submitted with
 automatic notification enabled; readback is WAITING_FOR_REVIEW /
