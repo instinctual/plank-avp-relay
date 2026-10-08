@@ -258,7 +258,7 @@
     "note": "Assertions must survive optimization. Never bare assert: C assert is removed by NDEBUG under CMake Release/RelWithDebInfo, and Swift assert is removed by -O. Both were measured. ONE negative control PER HARNESS, not one per revision.",
     "raw-relay-c-ctest": "cmake -S . -B <build>   # no CMAKE_BUILD_TYPE, or Debug",
     "managed-python": "python3 tests/<name>.py   # never python3 -O; prefer unittest asserts",
-    "setup-apple-ctest": "scripts/build-avp-relay.sh macos   # Xcode Debug, ctest -C Debug",
+    "setup-apple-ctest": "scripts/build-tablet-setup.sh macos   # Xcode Debug, ctest -C Debug",
     "client-apple-swiftc": "swiftc -Onone -DPLANK_TABLET_RELAY <Sources...> visionos-native/Tests/<Name>Tests.swift -o <out>"
   },
   "files": {

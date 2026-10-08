@@ -147,6 +147,9 @@ for name, meta in MANIFEST['files'].items():
 `apps/avp-relay/CMakeLists.txt` inside the existing
 `if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")` block, using `precondition`, built by
 `scripts/build-avp-relay.sh macos`, which then runs `ctest -C Debug`.
+The frozen manifest retains the upstream harness command spelling. The local
+build script was renamed along with the app; its Debug flags and conformance
+checks are the same. Do not change the shared manifest for local path renames.
 
 ```cmake
 set_tests_properties(handoff-descriptor-tests PROPERTIES ENVIRONMENT
