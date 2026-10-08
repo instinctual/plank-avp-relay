@@ -22,7 +22,7 @@ if not isinstance(udid, str) or not udid:
 print(udid)
 PY
 )
-python3 "$relay_root/scripts/check-tablet-setup-bundle.py" "$app" --platform device
-python3 "$relay_root/scripts/check-tablet-development.py" "$app" --udid "$udid"
+python3 "$relay_root/scripts/check-avp-relay-bundle.py" "$app" --platform device
+python3 "$relay_root/scripts/check-avp-relay-development.py" "$app" --udid "$udid"
 xcrun devicectl device install app --device "$device" "$app" --timeout 120
-printf '\nInstalled directly. Open PLANK AVP Relay Setup on the headset.\nNo TestFlight upload.\n'
+printf '\nInstalled directly. Open PLANK AVP Relay on the headset.\nNo TestFlight upload.\n'

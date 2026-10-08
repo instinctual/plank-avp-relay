@@ -273,7 +273,7 @@ public final class RelayPairingClient {
                              onProgress: ((String) -> Void)? = nil,
                              onApproval: @escaping (ButtonApproval) -> Void) async throws -> Data {
         guard privateKey.count == 32 else { throw RelaySetupError.invalidState }
-        let name = Array("PLANK AVP Relay Setup".utf8)
+        let name = Array("PLANK AVP Relay".utf8)
         let codec = privateKey.withUnsafeBytes { key in
             name.withUnsafeBufferPointer { label in
                 pltr_client_pair_create_button(key.bindMemory(to: UInt8.self).baseAddress,

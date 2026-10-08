@@ -19,7 +19,7 @@ sdk_version=$(xcrun --sdk "$sdk" --show-sdk-version)
 cmake_bin=${CMAKE_COMMAND:-cmake}
 jobs=${PLANK_BUILD_JOBS:-4}
 [[ $jobs =~ ^[1-9][0-9]*$ ]] || { echo "Invalid PLANK_BUILD_JOBS" >&2; exit 2; }
-build_root=${PLANK_TABLET_BUILD_ROOT:-"$relay_root/build/tablet-setup"}
+build_root=${PLANK_AVP_RELAY_BUILD_ROOT:-"$relay_root/build/avp-relay"}
 mkdir -p "$build_root/dependencies"
 sodium_version=1.0.22
 sodium_sha=adbdd8f16149e81ac6078a03aca6fc03b592b89ef7b5ed83841c086191be3349
@@ -60,11 +60,11 @@ fi
 app_build="$build_root/$platform"
 # Re-detect the selected Xcode; an OS/Xcode update can remove the old compiler
 # path. This refreshes configuration, not the verified dependency cache.
-"$cmake_bin" --fresh -S "$relay_root/apps/tablet-setup" -B "$app_build" -G Xcode \
+"$cmake_bin" --fresh -S "$relay_root/apps/avp-relay" -B "$app_build" -G Xcode \
     -DCMAKE_SYSTEM_NAME="$system" -DCMAKE_OSX_SYSROOT="$sdk" \
     -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=27.0 \
     -DPLANK_DEVELOPMENT_TEAM= \
-    -DPLANK_SETUP_BUILD_NUMBER="${PLANK_SETUP_BUILD_NUMBER:-1}" \
+    -DPLANK_AVP_RELAY_BUILD_NUMBER="${PLANK_AVP_RELAY_BUILD_NUMBER:-1}" \
     -DPLANK_ENABLE_TRANSPORT_TESTING="${PLANK_ENABLE_TRANSPORT_TESTING:-ON}" \
     -DPLANK_SODIUM_PREFIX="$prefix"
 "$cmake_bin" --build "$app_build" --config Debug --parallel "$jobs" -- -quiet CODE_SIGNING_ALLOWED=NO
@@ -73,7 +73,7 @@ if [[ $platform == macos ]]; then
 fi
 configuration=Debug
 [[ $platform == macos ]] || configuration="Debug-$sdk"
-python3 "$relay_root/scripts/check-tablet-setup-bundle.py" \
-    "$app_build/$configuration/PLANK AVP Relay Setup.app" --platform "$platform"
-printf '\nBuilt: %s/%s/PLANK AVP Relay Setup.app\n' "$app_build" "$configuration"
-printf 'Unsigned prototype. See apps/tablet-setup/README.md for device provisioning.\n'
+python3 "$relay_root/scripts/check-avp-relay-bundle.py" \
+    "$app_build/$configuration/PLANK AVP Relay.app" --platform "$platform"
+printf '\nBuilt: %s/%s/PLANK AVP Relay.app\n' "$app_build" "$configuration"
+printf 'Unsigned prototype. See apps/avp-relay/README.md for device provisioning.\n'

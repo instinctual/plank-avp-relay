@@ -270,7 +270,7 @@ def submit_external(api, app_id, build_id):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', type=Path, default=Path.home()/'.local/share/plank/private-notes/tablet-setup-asc.json')
+    parser.add_argument('--config', type=Path, default=Path.home()/'.local/share/plank/private-notes/avp-relay-asc.json')
     parser.add_argument('--version', required=True)
     parser.add_argument('--build', required=True)
     parser.add_argument('--notes', type=Path)

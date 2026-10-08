@@ -1,4 +1,4 @@
-# PLANK AVP Relay Setup — workflow lab
+# PLANK AVP Relay app
 
 A standalone SwiftUI visionOS app for reviewing tablet-relay onboarding. Also
 builds as a macOS UI preview. No workstation, remote desktop, Qt, SDL, FFmpeg or
@@ -297,16 +297,16 @@ the command-line tools selected for that Xcode. No personal signing IDs are
 checked in. The following builds are unsigned by default:
 
 ```sh
-bash scripts/build-tablet-setup.sh simulator
-bash scripts/build-tablet-setup.sh device
-bash scripts/build-tablet-setup.sh macos
+bash scripts/build-avp-relay.sh simulator
+bash scripts/build-avp-relay.sh device
+bash scripts/build-avp-relay.sh macos
 ```
 
 The script downloads a SHA-256-pinned libsodium1.0.22 source archive, builds it
 for the selected SDK and caches the verified library/headers by SDK/compiler
-fingerprint under `build/tablet-setup/dependencies`. Jobs default to4; override
+fingerprint under `build/avp-relay/dependencies`. Jobs default to4; override
 with positive `PLANK_BUILD_JOBS`. CMake/CTest paths may be supplied through
-`CMAKE_COMMAND`/`CTEST_COMMAND`. `PLANK_TABLET_BUILD_ROOT` relocates all output.
+`CMAKE_COMMAND`/`CTEST_COMMAND`. `PLANK_AVP_RELAY_BUILD_ROOT` relocates all output.
 The macOS build also runs pure Swift state and actual C protocol/crypto tests.
 Workflow tests cover canceled/stale operations, retained Bluetooth Keychain account
 identifiers, observation and the distinction between byte echo and saved trust.
@@ -316,14 +316,14 @@ Native C tests cover the shared pairing, framing and Noise implementation.
 These tests do not access the app Keychain or Bluetooth devices.
 Existing Linux daemon builds and service behavior are unchanged.
 
-Generated Xcode projects live in `build/tablet-setup/{simulator,device,macos}`.
+Generated Xcode projects live in `build/avp-relay/{simulator,device,macos}`.
 The app is under the configuration's output directory; Xcode may add a platform
-suffix, e.g. `Debug-xrsimulator/PLANK AVP Relay Setup.app`. The simulator requires
+suffix, e.g. `Debug-xrsimulator/PLANK AVP Relay.app`. The simulator requires
 an installed compatible visionOS runtime; compilation alone does not install
 one. Keep the simulator runtime separate from product dependencies.
 
 For a physical headset, open the generated device Xcode project and select
-the PLANK AVP Relay Setup target, your Apple development team, and the paired
+the PLANK AVP Relay target, your Apple development team, and the paired
 headset. Enable signing for the app target, or reconfigure with
 `-DPLANK_DEVELOPMENT_TEAM=YOUR_TEAM_ID` and build with Xcode's automatic
 development provisioning. Device registration/provisioning must be available
@@ -346,7 +346,7 @@ and clears it on interruption. Discovery, tablet management and the Network tab
 retain normal routing. This does not change the tablet-to-relay connection.
 
 This is temporary app-only qualification code. Build with
-`PLANK_ENABLE_TRANSPORT_TESTING=OFF bash scripts/build-tablet-setup.sh device`
+`PLANK_ENABLE_TRANSPORT_TESTING=OFF bash scripts/build-avp-relay.sh device`
 to hide the selector and ignore even a previously saved Bluetooth-only choice.
 The CMake option has the same name. `RelayTestTransport.swift` owns the policy
 and single defaults key; `RelayTestTransportView.swift` owns the selector UI.
@@ -364,9 +364,9 @@ and be included in the development provisioning profile. Keep the same bundle
 identifier and signing team so an update can retain app data and relay trust.
 Do not uninstall the existing app as part of this workflow.
 
-Use `scripts/export-tablet-development.sh <archive> <new-output-directory>` to export a development
+Use `scripts/export-avp-relay-development.sh <archive> <new-output-directory>` to export a development
 app from a validated archive, then run
-`scripts/install-tablet-development.sh <signed.app> <device-identifier>` on the
+`scripts/install-avp-relay-development.sh <signed.app> <device-identifier>` on the
 paired Mac. These commands do not upload to App Store Connect. Record the source
 revision, software version and build number for each installed candidate.
 
@@ -454,10 +454,10 @@ upload does not establish API access. Keep API credentials outside Git and
 never extract cached account tokens. Do not claim notes or compliance were
 completed until the resulting metadata has been read back and verified.
 
-Use `scripts/update-tablet-testflight.py` for the post-upload step on the
+Use `scripts/update-avp-relay-testflight.py` for the post-upload step on the
 operator's automation machine (Python3 with `cryptography` installed). Its
 default configuration is the private file
-`~/.local/share/plank/private-notes/tablet-setup-asc.json`; use `--config` to
+`~/.local/share/plank/private-notes/avp-relay-asc.json`; use `--config` to
 select another. Required fields are `key_id`, `issuer_id`, `private_key_path`,
 `bundle_id` and `platform` (`VISION_OS`). Both config and key must be owned by
 the current user with private permissions. Credentials stay on that machine;
@@ -465,10 +465,10 @@ they need not be copied to the Apple signing builder.
 
 ```sh
 # Read only: verify access and inspect the exact build's existing classification.
-python3 scripts/update-tablet-testflight.py --version 0.1.0 --build 6 --inspect
+python3 scripts/update-avp-relay-testflight.py --version 0.1.0 --build 6 --inspect
 # After establishing the confirmed private compliance baseline:
-python3 scripts/update-tablet-testflight.py --version 0.1.0 --build 6 \
-  --notes apps/tablet-setup/TestFlight/0.1.0-6.txt
+python3 scripts/update-avp-relay-testflight.py --version 0.1.0 --build 6 \
+  --notes apps/avp-relay/TestFlight/0.1.0-6.txt
 ```
 
 The private `compliance` object contains the confirmed boolean
@@ -496,15 +496,15 @@ from external availability. Offline verification is
 
 ```sh
 # Team is provided privately; choose a new number for each uploaded build.
-export PLANK_SETUP_BUILD_NUMBER=7
-bash scripts/archive-tablet-setup.sh
-bash scripts/export-tablet-setup.sh \
-  build/tablet-setup/archives/PLANK-Tablet-Setup-7.xcarchive \
-  build/tablet-setup/exports/build-7
+export PLANK_AVP_RELAY_BUILD_NUMBER=7
+bash scripts/archive-avp-relay.sh
+bash scripts/export-avp-relay.sh \
+  build/avp-relay/archives/PLANK-AVP-Relay-7.xcarchive \
+  build/avp-relay/exports/build-7
 # Explicit upload, after creating the App Store Connect visionOS app record:
-bash scripts/export-tablet-setup.sh --upload \
-  build/tablet-setup/archives/PLANK-Tablet-Setup-7.xcarchive \
-  build/tablet-setup/uploads/build-7
+bash scripts/export-avp-relay.sh --upload \
+  build/avp-relay/archives/PLANK-AVP-Relay-7.xcarchive \
+  build/avp-relay/uploads/build-7
 ```
 
 The archive script requires `PLANK_DEVELOPMENT_TEAM` from the private build
@@ -517,10 +517,14 @@ keychain, extracting a password or weakening key access controls. Any temporary
 GUI build job must be one-shot and unloaded after it exits, not an installed
 autostart service.
 
-The visionOS layered icon is compiled from generated PNGs. Readable SVG sources
-stay in `Artwork/`; the native AppKit build helper rasterizes them only into the
-ignored build directory. Direct SVG layers are not valid inputs to this asset
-compiler. Static libraries are never separately signed/installed in the archive.
+The visionOS icon uses the approved PLANK relay artwork in
+`Artwork/plank-avp-relay-icon.png`, with its generation prompt beside it.
+The native AppKit build helper exports a 1024×1024 foreground layer preserving
+transparency and a matching opaque background from `Artwork/back.svg`. Generated
+PNGs stay in the ignored build directory; the original approved artwork stays
+in Git. CMake tracks both artwork inputs so an icon change regenerates the
+compiled asset catalog. Static libraries are never separately signed/installed
+in the archive.
 Bundle checks verify the actual compiled icon, scene manifest, version, privacy
 declaration and licenses before export. Upload completion still does not prove
 TestFlight processing, compliance approval or headset qualification.

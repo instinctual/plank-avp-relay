@@ -2,7 +2,7 @@
 import SwiftUI
 import RelaySetupKit
 
-struct TabletSetupView: View {
+struct AVPRelayView: View {
     @StateObject private var setup = SetupCoordinator()
     @ObservedObject private var enrollment = DrawingEnrollmentInbox.shared
     @Environment(\.scenePhase) private var scenePhase
@@ -20,8 +20,8 @@ struct TabletSetupView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("PLANK AVP Relay Setup").font(.title2.bold())
-                Text(Bundle.main.object(forInfoDictionaryKey: "PLANKSetupVersion") as? String ?? "development")
+                Text("PLANK AVP Relay").font(.title2.bold())
+                Text(Bundle.main.object(forInfoDictionaryKey: "PLANKRelayVersion") as? String ?? "development")
                     .font(.caption).foregroundStyle(.secondary)
             }
             TabView(selection: $selectedTab) {

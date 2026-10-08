@@ -1,5 +1,27 @@
 # PLANK AVP Relay and Setup app
 
+## Current development — approved icon and app naming
+
+The operator approved the PLANK-derived orange relay icon and requested removal
+of the old `apps/tablet-setup` folder name. The app now lives in `apps/avp-relay`;
+its Xcode project/target is `PlankAVPRelay`, its visible/product name is
+`PLANK AVP Relay`, and its entry views are `AVPRelayApp` / `AVPRelayView`.
+Build, archive, export, validation, development-install and TestFlight helpers
+now use `avp-relay` filenames. Build output defaults to `build/avp-relay`, with
+`PLANK_AVP_RELAY_BUILD_ROOT` and `PLANK_AVP_RELAY_BUILD_NUMBER` overrides.
+The TestFlight helper's private default config is now `avp-relay-asc.json`;
+the existing confirmed configuration was copied privately with its permissions
+and contents retained. Do not put that configuration or credentials in Git.
+
+The approved original PNG and prompt are in `apps/avp-relay/Artwork/`. The
+AppKit helper exports it as a 1024px foreground with transparency and a matching
+opaque background. The earlier tablet drawing SVG was removed. The bundle ID,
+pairing namespace, shared DrawingRegistration group and Client launch URL scheme
+remain the current ones, so this naming cleanup does not require reauthorization.
+Historical release artifacts keep their original names and source provenance.
+Fresh Apple build/archive/export verification is pending. The published release
+remains 0.6.8 / build 40; these icon/naming changes have not been uploaded.
+
 ## Current state — 0.6.8 / build 40 released October 7, 2026
 
 The operator approved integration of upstream PR #4, removal of the retired

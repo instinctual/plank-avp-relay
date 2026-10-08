@@ -3,10 +3,10 @@ import SwiftUI
 import RelaySetupKit
 
 @main
-struct TabletSetupApp: App {
+struct AVPRelayApp: App {
     var body: some Scene {
         WindowGroup {
-            TabletSetupView()
+            AVPRelayView()
 
         }
         .defaultSize(width: 820, height: 760)

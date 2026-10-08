@@ -3,7 +3,7 @@ file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/../../VERSION" PLANK_RELEASE_VERSION)
 if(NOT PLANK_RELEASE_VERSION MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+$")
     message(FATAL_ERROR "VERSION must contain Major.Minor.Ancillary")
 endif()
-project(PlankTabletSetup VERSION "${PLANK_RELEASE_VERSION}" LANGUAGES C Swift)
+project(PlankAVPRelay VERSION "${PLANK_RELEASE_VERSION}" LANGUAGES C Swift)
 add_compile_definitions("$<$<COMPILE_LANGUAGE:C>:PLTR_SOFTWARE_VERSION=\"${PROJECT_VERSION}\">")
 set(CMAKE_XCODE_ATTRIBUTE_SWIFT_VERSION 6.0)
 set(CMAKE_OSX_DEPLOYMENT_TARGET 27.0 CACHE STRING "Minimum Apple OS" FORCE)
@@ -13,10 +13,10 @@ if(NOT APPLE)
 endif()
 
 get_filename_component(RELAY_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
-set(PLANK_SODIUM_PREFIX "" CACHE PATH "Pinned libsodium prefix from build-tablet-setup.sh")
+set(PLANK_SODIUM_PREFIX "" CACHE PATH "Pinned libsodium prefix from build-avp-relay.sh")
 if(NOT EXISTS "${PLANK_SODIUM_PREFIX}/include/sodium.h" OR
    NOT EXISTS "${PLANK_SODIUM_PREFIX}/lib/libsodium.a")
-    message(FATAL_ERROR "Pinned libsodium is required; run scripts/build-tablet-setup.sh")
+    message(FATAL_ERROR "Pinned libsodium is required; run scripts/build-avp-relay.sh")
 endif()
 file(STRINGS "${PLANK_SODIUM_PREFIX}/include/sodium/version.h" SODIUM_VERSION_LINE
      REGEX "^#define SODIUM_VERSION_STRING ")
@@ -71,35 +71,35 @@ set_target_properties(CRelayProtocol RelaySetupKit PROPERTIES
     XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS "YES"
     XCODE_ATTRIBUTE_SKIP_INSTALL "YES")
 
-add_executable(PlankTabletSetup MACOSX_BUNDLE
-    Sources/TabletSetupApp.swift Sources/TabletSetupView.swift Sources/TabletReadingsView.swift Sources/RelayNetworkSettingsView.swift Sources/RelayWifiView.swift Sources/RelayTestTransportView.swift)
+add_executable(PlankAVPRelay MACOSX_BUNDLE
+    Sources/AVPRelayApp.swift Sources/AVPRelayView.swift Sources/TabletReadingsView.swift Sources/RelayNetworkSettingsView.swift Sources/RelayWifiView.swift Sources/RelayTestTransportView.swift)
 configure_file("${PLANK_SODIUM_PREFIX}/share/licenses/libsodium/LICENSE"
     "${CMAKE_CURRENT_BINARY_DIR}/libsodium-LICENSE.txt" COPYONLY)
 set(APP_LICENSES "${RELAY_ROOT}/LICENSE" "${RELAY_ROOT}/apple/NOTICE.md"
     "${CMAKE_CURRENT_BINARY_DIR}/libsodium-LICENSE.txt")
 set_source_files_properties(${APP_LICENSES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/licenses")
 set_source_files_properties(PrivacyInfo.xcprivacy PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-target_sources(PlankTabletSetup PRIVATE ${APP_LICENSES} PrivacyInfo.xcprivacy)
-target_include_directories(PlankTabletSetup PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
-target_link_libraries(PlankTabletSetup PRIVATE RelaySetupKit "-framework SwiftUI")
-target_compile_options(PlankTabletSetup PRIVATE -strict-concurrency=complete)
+target_sources(PlankAVPRelay PRIVATE ${APP_LICENSES} PrivacyInfo.xcprivacy)
+target_include_directories(PlankAVPRelay PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+target_link_libraries(PlankAVPRelay PRIVATE RelaySetupKit "-framework SwiftUI")
+target_compile_options(PlankAVPRelay PRIVATE -strict-concurrency=complete)
 
-set(PLANK_SETUP_VERSION "${PROJECT_VERSION}-main")
-set(PLANK_SETUP_BUILD_NUMBER "1" CACHE STRING "Monotonically increasing TestFlight build number")
-if(NOT PLANK_SETUP_BUILD_NUMBER MATCHES "^[1-9][0-9]*$")
-    message(FATAL_ERROR "PLANK_SETUP_BUILD_NUMBER must be a positive integer")
+set(PLANK_AVP_RELAY_VERSION "${PROJECT_VERSION}-main")
+set(PLANK_AVP_RELAY_BUILD_NUMBER "1" CACHE STRING "Monotonically increasing TestFlight build number")
+if(NOT PLANK_AVP_RELAY_BUILD_NUMBER MATCHES "^[1-9][0-9]*$")
+    message(FATAL_ERROR "PLANK_AVP_RELAY_BUILD_NUMBER must be a positive integer")
 endif()
 set(PLANK_DEVELOPMENT_TEAM "" CACHE STRING "Optional Apple development team; never hardcoded")
-set(PLANK_SETUP_BUNDLE_ID "la.instinctual.PLANK.AVPrelay")
+set(PLANK_AVP_RELAY_BUNDLE_ID "la.instinctual.PLANK.AVPrelay")
 configure_file(DrawingRegistration.entitlements.in
     "${CMAKE_CURRENT_BINARY_DIR}/DrawingRegistration.entitlements" @ONLY)
-set_target_properties(PlankTabletSetup PROPERTIES
-    OUTPUT_NAME "PLANK AVP Relay Setup"
+set_target_properties(PlankAVPRelay PROPERTIES
+    OUTPUT_NAME "PLANK AVP Relay"
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in"
-    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${PLANK_SETUP_BUNDLE_ID}"
-    XCODE_ATTRIBUTE_PRODUCT_NAME "PLANK AVP Relay Setup"
+    XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${PLANK_AVP_RELAY_BUNDLE_ID}"
+    XCODE_ATTRIBUTE_PRODUCT_NAME "PLANK AVP Relay"
     XCODE_ATTRIBUTE_MARKETING_VERSION "${PROJECT_VERSION}"
-    XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION "${PLANK_SETUP_BUILD_NUMBER}"
+    XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION "${PLANK_AVP_RELAY_BUILD_NUMBER}"
     XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
     XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_BINARY_DIR}/DrawingRegistration.entitlements"
     XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
@@ -113,28 +113,32 @@ set_target_properties(PlankTabletSetup PROPERTIES
 if(CMAKE_SYSTEM_NAME STREQUAL "visionOS")
     set(GENERATED_ASSETS "${CMAKE_CURRENT_BINARY_DIR}/generated/Assets.xcassets")
     file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/Assets.xcassets/" DESTINATION "${GENERATED_ASSETS}")
-    # visionOS layered icons require raster layers. Retain readable SVG source
-    # and rasterize through the build Mac's native AppKit without new tools.
+    # Export the approved PNG artwork over an opaque background as 1024px
+    # visionOS layers using the build Mac's native AppKit.
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/Artwork/plank-avp-relay-icon.png"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Artwork/back.svg"
+        "${RELAY_ROOT}/scripts/render-avp-relay-icon.swift")
     execute_process(COMMAND xcrun --sdk macosx swift
-        "${RELAY_ROOT}/scripts/render-tablet-setup-icon.swift"
+        "${RELAY_ROOT}/scripts/render-avp-relay-icon.swift"
         "${CMAKE_CURRENT_SOURCE_DIR}/Artwork" "${GENERATED_ASSETS}"
         COMMAND_ERROR_IS_FATAL ANY)
     set_source_files_properties("${GENERATED_ASSETS}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    target_sources(PlankTabletSetup PRIVATE "${GENERATED_ASSETS}")
-    set_target_properties(PlankTabletSetup PROPERTIES
+    target_sources(PlankAVPRelay PRIVATE "${GENERATED_ASSETS}")
+    set_target_properties(PlankAVPRelay PROPERTIES
         XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "7"
         XCODE_ATTRIBUTE_GENERATE_INFOPLIST_FILE "YES"
         XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
 endif()
 if(PLANK_DEVELOPMENT_TEAM)
-    set_target_properties(PlankTabletSetup PROPERTIES
+    set_target_properties(PlankAVPRelay PROPERTIES
         XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${PLANK_DEVELOPMENT_TEAM}"
         XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "YES")
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     enable_testing()
-    add_executable(setup-preview Sources/PreviewMain.swift Sources/TabletSetupView.swift Sources/TabletReadingsView.swift Sources/RelayNetworkSettingsView.swift Sources/RelayWifiView.swift Sources/RelayTestTransportView.swift)
+    add_executable(setup-preview Sources/PreviewMain.swift Sources/AVPRelayView.swift Sources/TabletReadingsView.swift Sources/RelayNetworkSettingsView.swift Sources/RelayWifiView.swift Sources/RelayTestTransportView.swift)
     target_include_directories(setup-preview PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
     target_link_libraries(setup-preview PRIVATE RelaySetupKit "-framework SwiftUI" "-framework AppKit")
     add_executable(setup-state-tests

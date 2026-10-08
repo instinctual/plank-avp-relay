@@ -144,9 +144,9 @@ for name, meta in MANIFEST['files'].items():
 ```
 
 **Setup Apple tests** — a Swift `@main` executable registered in
-`apps/tablet-setup/CMakeLists.txt` inside the existing
+`apps/avp-relay/CMakeLists.txt` inside the existing
 `if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")` block, using `precondition`, built by
-`scripts/build-tablet-setup.sh macos`, which then runs `ctest -C Debug`.
+`scripts/build-avp-relay.sh macos`, which then runs `ctest -C Debug`.
 
 ```cmake
 set_tests_properties(handoff-descriptor-tests PROPERTIES ENVIRONMENT

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Reject a tablet setup archive missing matching application debug symbols."""
+"""Reject an AVP Relay archive missing matching application debug symbols."""
 import pathlib
 import plistlib
 import re
@@ -8,10 +8,10 @@ import subprocess
 import sys
 
 archive = pathlib.Path(sys.argv[1])
-app = archive / 'Products/Applications/PLANK AVP Relay Setup.app'
+app = archive / 'Products/Applications/PLANK AVP Relay.app'
 info = plistlib.loads((app / 'Info.plist').read_bytes())
 binary = app / info['CFBundleExecutable']
-symbols = archive / 'dSYMs/PLANK AVP Relay Setup.app.dSYM'
+symbols = archive / 'dSYMs/PLANK AVP Relay.app.dSYM'
 if not symbols.is_dir():
     sys.exit('FAIL: application dSYM missing from archive')
 

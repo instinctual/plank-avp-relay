@@ -5,20 +5,20 @@ set -euo pipefail
 relay_root=$(cd "$(dirname "$0")/.." && pwd)
 destination=export
 if [[ ${1:-} == --upload ]]; then destination=upload; shift; fi
-if [[ $# != 2 || ! -d "$1/Products/Applications/PLANK AVP Relay Setup.app" ]]; then
+if [[ $# != 2 || ! -d "$1/Products/Applications/PLANK AVP Relay.app" ]]; then
     echo "Usage: $0 [--upload] archive.xcarchive new-output-directory" >&2
     exit 2
 fi
 archive_path=$1
 export_path=$2
 [[ ! -e "$export_path" ]] || { echo "Output directory already exists." >&2; exit 1; }
-python3 "$relay_root/scripts/check-tablet-setup-bundle.py" \
-    "$archive_path/Products/Applications/PLANK AVP Relay Setup.app" --platform device
-codesign --verify --deep --strict "$archive_path/Products/Applications/PLANK AVP Relay Setup.app"
-python3 "$relay_root/scripts/check-tablet-setup-symbols.py" "$archive_path"
+python3 "$relay_root/scripts/check-avp-relay-bundle.py" \
+    "$archive_path/Products/Applications/PLANK AVP Relay.app" --platform device
+codesign --verify --deep --strict "$archive_path/Products/Applications/PLANK AVP Relay.app"
+python3 "$relay_root/scripts/check-avp-relay-symbols.py" "$archive_path"
 mkdir -p "$export_path"
 options="$export_path/ExportOptions.plist"
-cp "$relay_root/apps/tablet-setup/ExportOptions.plist" "$options"
+cp "$relay_root/apps/avp-relay/ExportOptions.plist" "$options"
 plutil -replace destination -string "$destination" "$options"
 xcodebuild -exportArchive -archivePath "$archive_path" -exportPath "$export_path" \
     -exportOptionsPlist "$options" -allowProvisioningUpdates

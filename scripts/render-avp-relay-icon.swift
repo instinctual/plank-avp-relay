@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Build-time vector-to-raster export. No window, screen capture or permission.
+// Build-time export of the approved artwork into visionOS icon layers.
 import AppKit
 
 guard CommandLine.arguments.count == 3 else { fatalError("Expected artwork and generated asset directories") }
@@ -8,7 +8,8 @@ let assets = URL(fileURLWithPath: CommandLine.arguments[2], isDirectory: true)
 for layer in ["Front", "Back"] {
     let name = layer.lowercased()
     let alpha = layer == "Front"
-    guard let image = NSImage(contentsOf: artwork.appendingPathComponent("\(name).svg")),
+    let source = alpha ? "plank-avp-relay-icon.png" : "back.svg"
+    guard let image = NSImage(contentsOf: artwork.appendingPathComponent(source)),
           let space = CGColorSpace(name: CGColorSpace.sRGB),
           let raster = CGContext(data: nil, width: 1024, height: 1024, bitsPerComponent: 8,
                                  bytesPerRow: 0, space: space,

@@ -19,7 +19,7 @@ entitlements = plistlib.loads(subprocess.check_output([
     'codesign', '--display', '--entitlements', ':-', str(args.app)], stderr=subprocess.DEVNULL))
 bundle = 'la.instinctual.PLANK.AVPrelay'
 if info.get('CFBundleIdentifier') != bundle or info.get('CFBundleSupportedPlatforms') != ['XROS']:
-    parser.error('Expected the PLANK AVP Relay Setup device app.')
+    parser.error('Expected the PLANK AVP Relay device app.')
 if profile.get('ExpirationDate', datetime.datetime.min) <= datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None):
     parser.error('Development provisioning profile has expired.')
 if (not profile.get('ProvisionedDevices') or entitlements.get('get-task-allow') is not True

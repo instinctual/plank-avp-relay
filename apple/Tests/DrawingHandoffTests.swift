@@ -3,7 +3,7 @@
 // plank-drawing-handoff-v1+r3 conformance for the Setup app.
 //
 // Frozen harness and flags (contract §12.2, MANIFEST.json testFlags):
-//     bash scripts/build-tablet-setup.sh macos
+//     bash scripts/build-avp-relay.sh macos
 // which configures the Xcode generator, builds `--config Debug` and then runs
 // `ctest --test-dir … -C Debug --output-on-failure`. `Debug` means `-Onone`,
 // but every assertion below is a `precondition` or an explicit failure check,
@@ -11,7 +11,7 @@
 // Swift `assert` is removed by `-O`, which was measured.
 //
 // Vectors are LOADED from the shared fixtures, never retyped. The directory
-// arrives in PLANK_HANDOFF_FIXTURES from apps/tablet-setup/CMakeLists.txt, and
+// arrives in PLANK_HANDOFF_FIXTURES from apps/avp-relay/CMakeLists.txt, and
 // every file's SHA-256 is verified against MANIFEST.json, whose own SHA-256 is
 // asserted against the literal in the fixtures' README, so a contract revision
 // fails this test instead of quietly diverging.

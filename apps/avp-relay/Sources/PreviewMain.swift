@@ -93,7 +93,7 @@ enum SetupPreview {
                     Text("Input readout preview — synthetic data").font(.title2)
                     TabletReadingsView(readings: try! TabletReadings(data: sample), count: 120)
                 }.padding(30))
-            } else { content = AnyView(TabletSetupView()) }
+            } else { content = AnyView(AVPRelayView()) }
             let view = content
                 .frame(width: 820, height: 820)
                 .environment(\.colorScheme, .dark)

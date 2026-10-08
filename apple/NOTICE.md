@@ -1,6 +1,6 @@
 # Apple setup component provenance
 
-All new files in this directory and `apps/tablet-setup` are GPL-3.0-or-later,
+All new files in this directory and `apps/avp-relay` are GPL-3.0-or-later,
 consistent with the repository license. The existing C relay pairing/Noise
 implementation is linked directly from `src/`; it is not copied or replaced.
 

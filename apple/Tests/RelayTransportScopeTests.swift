@@ -4,8 +4,8 @@
 // preliminary connection. Remembered routes must obey the captured preference
 // in either operation, even when a successful TCP route would be ordered first.
 //
-// Build/run: this target is registered in apps/tablet-setup/CMakeLists.txt and
-// runs under `scripts/build-tablet-setup.sh macos` (Xcode Debug, so -Onone).
+// Build/run: this target is registered in apps/avp-relay/CMakeLists.txt and
+// runs under `scripts/build-avp-relay.sh macos` (Xcode Debug, so -Onone).
 // Assertions use `precondition`, which survives optimization.
 import Foundation
 @testable import RelaySetupKit

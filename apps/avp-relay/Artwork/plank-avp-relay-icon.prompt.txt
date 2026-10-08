@@ -1,0 +1,17 @@
+Generation method: built-in imagegen.
+Reference: PLANK branding/assets/plank-logo.png from the sibling plank repository.
+Output: plank-avp-relay-icon.png
+Actual output: 1254 x 1254 RGBA PNG; generated transparency preserved unchanged.
+Status: approved artwork; exported at build time as the visionOS foreground layer.
+
+Use case: logo-brand.
+Asset type: a new PLANK AVP Relay app icon, a sibling to the supplied PLANK brand icon.
+Input image 1 is the existing PLANK icon and is the visual reference. Create a new variation of that artwork for the Relay app; do not include any text.
+
+Retain the recognizable central black geometric PLANK emblem: pentagonal head, raised diagonal arms, slatted rectangular torso and two angled legs. Preserve its silhouette and proportions closely. Retain the rich amber/orange glowing light, dark charcoal contrast, warm sun behind the emblem, distant rocky landscape and premium dimensional finish from the reference.
+
+Change the surrounding device motif: remove the desktop monitor rectangle, bezel, pedestal and stand completely. Make the central emblem feel like a relay beacon. Flank it with two elegant symmetrical sets of curved radio-signal arcs, three on each side, radiating outward horizontally. The arcs should have the same refined amber edge lighting as the reference. They must read as one simple, balanced connection symbol, not as extra hardware or floating interface badges.
+
+Composition: centered circular icon, with a thin warm orange halo around its perimeter and a clean strong silhouette legible at small app-icon sizes. The emblem is the hero and the signal arcs are secondary. Simplify the landscape detail so the symbol remains clear. Keep the entire round icon inside the square canvas with a little clear padding. Preserve transparency outside the circle. No square tile, no rounded-square background, no frame beyond the circular halo. No letters, words, numbers, watermarks, desktop monitor, cable diagram, tablet, multiple concepts or presentation sheet.
+
+Output a single polished square 1024 by 1024 PNG icon, with genuinely transparent pixels outside the circular artwork.

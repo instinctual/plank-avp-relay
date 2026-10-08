@@ -8,7 +8,7 @@ The earlier [Instinctual fork](https://github.com/instinctual/plank-tablet-relay
 remains available for upstream collaboration and historical build records.
 
 The current managed Linux relay reads USB or Bluetooth Wacom tablets and
-provides encrypted tablet setup and readings to the PLANK AVP Relay Setup app.
+provides encrypted tablet setup and readings to the PLANK AVP Relay app.
 Release 0.4.0 also manages USB Ethernet on a supported dedicated relay box,
 with Bridge/Router selection and separate connection statuses in the app's
 Network tab. Physical Ethernet carrier gates USB attachment; relay Wi-Fi is
@@ -32,7 +32,7 @@ Native build and clean-install logs remain in the
 [Linux relay packages workflow](https://github.com/instinctual/plank-avp-relay/actions/workflows/relay-deb.yml).
 Generated installers, symbols and build logs are release/CI artifacts rather than Git files.
 See [installation and network behavior](docs/linux-ble-package.md) and
-[the current app workflow](apps/tablet-setup/README.md).
+[the current app workflow](apps/avp-relay/README.md).
 The [platform matrix](docs/relay-platforms.md) distinguishes each Armbian
 board/kernel image from the shared arm64 relay package.
 Release 0.5.1 requires confirmed tablet availability before starting readings
@@ -50,7 +50,7 @@ below for reference. The new managed TCP path does not reuse its transport,
 pairing commands or worker. The Client owns the authenticated Host session;
 the Relay has no Host credentials.
 
-The [PLANK AVP Relay Setup workflow lab](apps/tablet-setup/README.md) on
+The [PLANK AVP Relay app](apps/avp-relay/README.md) on
 `main` exercises onboarding without remote desktop.
 It opens directly to relay discovery. An explicit
 [Bluetooth headset input lab](docs/bluetooth-headset-lab.md) adds authenticated

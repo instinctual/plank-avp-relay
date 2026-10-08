@@ -2,7 +2,7 @@
 
 ## Operator flow
 
-Use PLANK AVP Relay Setup to discover, authorize and configure a relay. Test the
+Use PLANK AVP Relay to discover, authorize and configure a relay. Test the
 pen, stop the test, then choose **Use in PLANK**. Setup stops and awaits any
 remaining preview before opening PLANK, releasing the shared capture lease.
 

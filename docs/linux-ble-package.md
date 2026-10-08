@@ -5,7 +5,7 @@ arm64 for Armbian NanoPi Zero2/R28S. Zero2 uses the operator-selected 6.18.54
 image. See the [platform/kernel matrix](relay-platforms.md); kernels/drivers
 are board-specific, while the ARM relay package is shared.
 
-`plank-avp-relay` installs the relay used by PLANK AVP Relay Setup: discover
+`plank-avp-relay` installs the relay used by PLANK AVP Relay: discover
 the relay, pair a tablet to authorize the initiating headset automatically, and
 view authenticated position, pressure and button readings. This source candidate
 also packages the separate `plank-tablet-relay` raw-HID drawing daemon; see

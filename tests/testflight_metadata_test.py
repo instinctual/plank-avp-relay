@@ -13,7 +13,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ec, utils
 
 spec = importlib.util.spec_from_file_location('testflight',
-    Path(__file__).resolve().parents[1]/'scripts/update-tablet-testflight.py')
+    Path(__file__).resolve().parents[1]/'scripts/update-avp-relay-testflight.py')
 testflight = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(testflight)
 

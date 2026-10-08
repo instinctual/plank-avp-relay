@@ -15,12 +15,14 @@ resources = contents / "Resources" if args.platform == "macos" else contents
 with (contents / "Info.plist").open("rb") as source:
     info = plistlib.load(source)
 assert info["CFBundleIdentifier"] == "la.instinctual.PLANK.AVPrelay"
+assert info["CFBundleName"] == "PLANK AVP Relay"
+assert info["CFBundleDisplayName"] == "PLANK AVP Relay"
 assert info.get("NSBluetoothAlwaysUsageDescription")
 assert info.get("NSLocalNetworkUsageDescription")
 assert info["NSBonjourServices"] == ["_plank-avp-relay._tcp"]
 assert re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", info["CFBundleShortVersionString"])
 assert re.fullmatch(r"[1-9][0-9]*", info["CFBundleVersion"])
-assert info["PLANKSetupVersion"] == f'{info["CFBundleShortVersionString"]}-main'
+assert info["PLANKRelayVersion"] == f'{info["CFBundleShortVersionString"]}-main'
 with (resources / "PrivacyInfo.xcprivacy").open("rb") as source:
     privacy = plistlib.load(source)
 assert privacy["NSPrivacyTracking"] is False
