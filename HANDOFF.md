@@ -1,6 +1,6 @@
 # PLANK AVP Relay
 
-## Current development — approved icon and app naming
+## Current app delivery — 0.6.8 / build 41, October 7, 2026
 
 The operator approved the PLANK-derived orange relay icon and requested removal
 of the old `apps/tablet-setup` folder name. The app now lives in `apps/avp-relay`;
@@ -34,11 +34,46 @@ config filename. Source, archive, IPA, hashes, icon previews and verification lo
 are in `artifacts/app-validation/0.6.8/icon-naming/`. The one-time signing job was
 unloaded after completion.
 
-The local validation archive uses 0.6.8 / build 41 and has not been uploaded or
-installed. The published release remains 0.6.8 / build 40; these icon/naming
-changes are ready for a subsequent app delivery. No new GitHub release was made.
+At the operator's request, the exact validated archive was uploaded as 0.6.8 /
+build 41. Upload succeeded October 8 at 05:54:21 UTC (October 7 locally). Apple
+reports VALID and IN_BETA_TESTING internally, and both existing PLANK Testing
+groups are assigned. The notes in `apps/avp-relay/TestFlight/0.6.8-41.txt`, the
+confirmed Standard / No France compliance baseline, and automatic tester
+notification were saved and read back. No device installation was performed.
 
-## Current state — 0.6.8 / build 40 released October 7, 2026
+External submission is **not yet complete**: Apple returned
+`ENTITY_UNPROCESSABLE.ANOTHER_BUILD_IN_REVIEW` because build 40 is now IN_REVIEW.
+Build 41 remains READY_FOR_BETA_SUBMISSION with no review submission of its own.
+Apple permits only one build of each version in review at a time. Existing build
+40 was not expired or removed from review.
+
+A one-time user service, `plank-testflight-068-41.service`, checks every five
+minutes until October 9 at 06:00 UTC (October 8 at 23:00 Pacific). It submits
+only this exact build after the previous review is approved, preserves existing
+groups and notification settings, verifies the result and exits. It stops for
+attention if the earlier review is rejected, repeated errors occur or the
+24-hour deadline expires. The latest state is in
+`artifacts/testflight/0.6.8/build-41/external-retry-status.json`; read this and
+`testflight-verification.json` before claiming external availability. Its
+request, pinned helper, worker, log and release provenance are in the same
+directory. No credentials are embedded in that job or committed to Git.
+
+Build 41 reuses source `2eb5849e731170f5d664044f36af1f8aaf0c3db7`; later notes
+commits do not change its provenance. Source, archive, validated IPA, hashes,
+upload log and App Store Connect readback are saved under
+`artifacts/testflight/0.6.8/build-41/`. The validation IPA hash identifies the
+earlier signed export; Xcode re-exported the same archive for upload. The
+one-time mac12 signing/upload jobs are unloaded; only the bounded local review
+continuation remains active as of the last saved status.
+
+The existing GitHub v0.6.8 release notes now describe app build 41 separately
+from the unchanged relay installers and original app build 40. All six asset
+digests and the tag still match their original release provenance at `c013373`.
+No new Linux package, tag or GitHub release was needed for this app-only update.
+GitHub verification is saved in
+`artifacts/releases/0.6.8/github-release-build41-verification.json`.
+
+## Original 0.6.8 release — build 40, October 7, 2026
 
 The operator approved integration of upstream PR #4, removal of the retired
 TabletSetup build identity, and a coordinated app/relay build and release.
@@ -104,9 +139,10 @@ group, release details, validation results, separate Client build 46 requirement
 and outstanding fully wireless qualification. No further closure or duplicate
 notification is needed for this PR.
 
-The last saved TestFlight readback, October 8 at 00:53 UTC, reports build 40
+The original release's TestFlight readback, October 8 at 00:53 UTC, reports build 40
 available internally and awaiting external beta review. Recheck App Store Connect
-before making a new claim about external availability. Matching Client delivery
+before making a new claim about external availability; the build 41 section above
+records its later IN_REVIEW state. Matching Client delivery
 and simultaneous wireless Wacom / isolated Bluetooth drawing still need separate
 verification. Release artifacts and validation evidence are saved at the paths
 above; the release source remains `c013373` even as these handoff notes advance.
