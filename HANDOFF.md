@@ -42,8 +42,9 @@ confirmed Standard / No France compliance baseline, and automatic tester
 notification were saved and read back. No device installation was performed.
 
 External submission is **not yet complete**: Apple returned
-`ENTITY_UNPROCESSABLE.ANOTHER_BUILD_IN_REVIEW` because build 40 is now IN_REVIEW.
-Build 41 remains READY_FOR_BETA_SUBMISSION with no review submission of its own.
+`ENTITY_UNPROCESSABLE.ANOTHER_BUILD_IN_REVIEW`. Fresh readback on October 8 at
+06:35 UTC (October 7 at 23:35 Pacific) confirms build 40 is IN_REVIEW and build
+41 remains READY_FOR_BETA_SUBMISSION with no review submission of its own.
 Apple permits only one build of each version in review at a time. Existing build
 40 was not expired or removed from review.
 
@@ -72,6 +73,29 @@ digests and the tag still match their original release provenance at `c013373`.
 No new Linux package, tag or GitHub release was needed for this app-only update.
 GitHub verification is saved in
 `artifacts/releases/0.6.8/github-release-build41-verification.json`.
+
+### Session checkpoint — October 7, 2026, 23:35 Pacific
+
+The operator requested commit/push verification and then saving these notes.
+All icon, naming and release work is committed on `main`; local HEAD and GitHub
+both matched `b31584c705f312d0323ef0680da742155b46b609` before this notes-only
+checkpoint. The working tree was clean. The app binary source remains `2eb5849`
+and the Linux package/tag source remains `c013373`.
+
+The bounded external-review continuation was verified active. Build 41 is VALID
+and IN_BETA_TESTING internally, with automatic notification enabled. The fresh
+read-only check is saved as
+`artifacts/testflight/0.6.8/build-41/handoff-status-readback.json`. Earlier worker
+polls have shown both WAITING_FOR_REVIEW and IN_REVIEW for build 40; neither
+means build 41 has been submitted or approved.
+
+On resumption, inspect the worker's latest status and App Store Connect before
+making any new delivery claim. If the continuation has stopped, resolve its
+recorded reason and use `scripts/update-avp-relay-testflight.py` with version
+`0.6.8`, build `41` and `apps/avp-relay/TestFlight/0.6.8-41.txt` to finish the
+existing build's external delivery. A new archive or upload is unnecessary.
+Matching Client delivery and fully wireless hardware qualification remain the
+separate outstanding checks described below.
 
 ## Original 0.6.8 release — build 40, October 7, 2026
 
