@@ -54,6 +54,25 @@ Fully wireless Wacom plus isolated Bluetooth drawing remains a separate hardware
 qualification. Previous network-isolation acceptance used a USB tablet. Preserve
 that distinction in future release notes and live testing.
 
+### PR follow-up and remaining checks
+
+After publication, the operator asked whether Chris's PR was closed and whether
+he had been told about our changes. Verified that
+[PR #4](https://github.com/instinctual/plank-avp-relay/pull/4) is MERGED, which
+also closes it. Posted and read back a
+[follow-up comment for @cnoellert](https://github.com/instinctual/plank-avp-relay/pull/4#issuecomment-6049934286)
+covering the retired identity removal, retained pairing keys and shared receipt
+group, release details, validation results, separate Client build 46 requirement,
+and outstanding fully wireless qualification. No further closure or duplicate
+notification is needed for this PR.
+
+The last saved TestFlight readback, October 8 at 00:53 UTC, reports build 40
+available internally and awaiting external beta review. Recheck App Store Connect
+before making a new claim about external availability. Matching Client delivery
+and simultaneous wireless Wacom / isolated Bluetooth drawing still need separate
+verification. Release artifacts and validation evidence are saved at the paths
+above; the release source remains `c013373` even as these handoff notes advance.
+
 ## Previous release — 0.6.7
 
 
