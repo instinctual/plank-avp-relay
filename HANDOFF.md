@@ -1,6 +1,24 @@
 # PLANK AVP Relay and Setup app
 
-## Current state — 0.6.7 released; live validation pending
+## Current state — preparing 0.6.8 / build 40
+
+The operator approved integration of upstream PR #4, removal of the retired
+TabletSetup build identity, and a coordinated app/relay build and release.
+PR #3 is merged at `942b82b`; PR #4 is merged at `ac6c7de`. The latter preserves
+the tested complete-package source and pins raw drawing commit
+`029721f9b60833d36aa31f4da558cf8325e111ca`. The separate PLANK Vision Client
+requirement is build 46 / publication `5f2d28a10a0a1a113b7618bcf4e7b1e521f00725`.
+
+Version 0.6.8 keeps only `la.instinctual.PLANK.AVPrelay`, preserves its existing
+pairing storage, and retains the public DrawingRegistration group needed for
+Allow PLANK. The package includes both management and raw drawing services.
+Fresh release builds, archive/export, upload and metadata verification are
+pending. No live relay upgrade or headset ownership reset is authorized by
+this release preparation. Fully wireless Wacom plus isolated Bluetooth drawing
+remains a separate hardware qualification; record it honestly in release notes.
+
+## Previous release — 0.6.7
+
 
 Release policy: publish a GitHub release only alongside a matching TestFlight
 release. Normal Linux builds must not generate or publish dbgsym packages.

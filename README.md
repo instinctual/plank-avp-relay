@@ -40,8 +40,10 @@ and adds explicit saved-identity recovery for a relay after an OS reinstall.
 
 The [Setup-to-PLANK drawing handoff](docs/plank-drawing-handoff.md) registers an
 authorized relay with the Client without typing its address. Setup control and
-PLANK drawing use separate authenticated connections. The handoff requires the
-matching raw tablet service described in that guide.
+PLANK drawing use separate authenticated connections. Version 0.6.8 packages
+both services and supports Bluetooth raw drawing and Setup-mediated Client
+approval. Use the matching PLANK Vision Client build 46 integration described
+in that guide; the fully wireless tablet-plus-headset chain still needs validation.
 
 The older raw-HID workstation service is a separate implementation described
 below for reference. The new managed TCP path does not reuse its transport,

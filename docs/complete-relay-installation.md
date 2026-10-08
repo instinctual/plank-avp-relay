@@ -1,12 +1,15 @@
-# Complete Relay package candidate
+# Complete Relay installation
 
-Status: package candidate; clean native builds and installation checks pass on
-Ubuntu 26.04 amd64 and Debian 13 arm64. Hardware deployment remains pending.
-This is the packaging slice of the Bluetooth drawing implementation plan.
-The older package CI results below predate Setup-mediated enrollment and
-registered transport selection. Enrollment passed the development-device check;
-the registered transport candidate is implemented and awaiting its live pass.
-The complete package must be rebuilt from the current pin before release.
+Version 0.6.8 includes management, raw Bluetooth/TCP drawing, and Setup-mediated
+Client enrollment in one installer. Native Ubuntu 26.04 amd64 and Debian 13
+arm64 package and installation checks qualify the supported userspaces; each
+Armbian board, kernel and radio still needs hardware qualification.
+
+Chris's paired development-device checks covered registration, Bluetooth and
+network drawing, reconnect, sleep/wake and tablet/service recovery. The relay
+network-isolation test used a USB tablet. Simultaneous wireless Wacom input and
+an isolated Bluetooth drawing link remain unqualified. See the
+[handoff guide](plank-drawing-handoff.md) for exact Client requirements.
 
 ## One package, two services
 
@@ -76,14 +79,10 @@ requires the raw executable, unit, permissions, bind conffile and provenance.
 The Linux package workflow builds both suites, checks systemd units and installs
 and removes the full package in disposable amd64/arm64 environments.
 
-[Workflow 37177939662](https://github.com/cnoellert/plank-avp-relay/actions/runs/37177939662)
-passed both native builds, all 35 managed and 25 raw tests on each architecture,
-package lint and extracted/installed smoke checks, and independent clean-install,
-reinstall and removal checks with raw state retention. The tested functional
-source is managed commit `89df07fcbf4b3330e73a2d38a08a582122703aae`; this status
-update changes documentation only. These disposable install environments prevent
-service startup and do not prove hardware capture, live service behavior or
-migration of a hand-installed Relay. A hardware deployment remains a separate
-step with rollback. Bluetooth-only drawing, fresh Setup-mediated enrollment without
-ExpressKeys, and the final registered-Relay transport UI are separate remaining
-slices; this package does not claim their acceptance.
+The integration source passed all 37 managed and 26 raw suites on both
+architectures, plus independent install/reinstall/remove checks in
+[upstream run 37552714637](https://github.com/instinctual/plank-avp-relay/actions/runs/37552714637).
+Release 0.6.8 is rebuilt and verified from its tagged source; release provenance
+identifies those final artifacts. Disposable installation checks do not prove
+hardware capture or radio timing. Preserve state and retain rollback packages
+when qualifying a live relay; do not reset pairing to make a test pass.

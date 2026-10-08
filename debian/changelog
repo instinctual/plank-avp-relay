@@ -1,3 +1,12 @@
+plank-avp-relay (0.6.8) experimental; urgency=medium
+
+  * Install the pinned raw drawing service alongside relay management.
+  * Carry authenticated PLANK drawing over Bluetooth L2CAP and TCP.
+  * Register PLANK through Setup without tablet-specific button sequences.
+  * Keep the current AVP Relay app identity and existing saved approvals.
+
+ -- PLANK contributors <625982+alatteri@users.noreply.github.com>  Thu, 08 Oct 2026 00:35:03 -0000
+
 plank-avp-relay (0.6.7) experimental; urgency=medium
 
   * Coordinate tablet capture with the PLANK drawing service.

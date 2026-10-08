@@ -1,0 +1,12 @@
+PLANK AVP Relay 0.6.8
+
+Use the matching relay package 0.6.8. It now installs both relay management and the raw drawing service. Existing app approvals and tablet bonds are preserved.
+
+What to test:
+- Discover your relay, set up a USB or Bluetooth Wacom, and confirm pen position, pressure and buttons in Test Tablet.
+- Choose Use in PLANK. With the matching PLANK Vision Client build 46, approve first-time registration through Continue in Relay Setup → Allow PLANK. No tablet button sequence is required.
+- In PLANK Vision, choose Automatic, Bluetooth or Network for the registered relay. Explicit Bluetooth must not silently fall back to TCP. Check drawing, pen controls and reconnect.
+- Stop drawing before returning to Setup tablet operations. Confirm network controls remain usable and tablet capture transfers cleanly.
+- Verify existing relay approvals survive the update and that changing a relay address does not require authorization again.
+
+The matching PLANK Vision Client is a separate app and release. Bluetooth drawing with relay networking disabled was previously tested using a USB tablet. Simultaneous wireless Wacom input and isolated Bluetooth relay-to-headset drawing still need validation; this build does not claim that full wireless qualification.

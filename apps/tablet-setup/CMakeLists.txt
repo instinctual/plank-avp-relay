@@ -90,12 +90,7 @@ if(NOT PLANK_SETUP_BUILD_NUMBER MATCHES "^[1-9][0-9]*$")
     message(FATAL_ERROR "PLANK_SETUP_BUILD_NUMBER must be a positive integer")
 endif()
 set(PLANK_DEVELOPMENT_TEAM "" CACHE STRING "Optional Apple development team; never hardcoded")
-set(PLANK_SETUP_BUNDLE_ID "la.instinctual.PLANK.AVPrelay" CACHE STRING
-    "Setup app identity; use TabletSetup only to update an existing development installation")
-if(NOT PLANK_SETUP_BUNDLE_ID STREQUAL "la.instinctual.PLANK.AVPrelay" AND
-   NOT PLANK_SETUP_BUNDLE_ID STREQUAL "la.instinctual.PLANK.TabletSetup")
-    message(FATAL_ERROR "Unsupported PLANK_SETUP_BUNDLE_ID")
-endif()
+set(PLANK_SETUP_BUNDLE_ID "la.instinctual.PLANK.AVPrelay")
 configure_file(DrawingRegistration.entitlements.in
     "${CMAKE_CURRENT_BINARY_DIR}/DrawingRegistration.entitlements" @ONLY)
 set_target_properties(PlankTabletSetup PROPERTIES

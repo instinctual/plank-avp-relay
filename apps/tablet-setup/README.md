@@ -408,16 +408,12 @@ the earlier app's saved headset key. When switching the live headset to the new
 app, use the documented [SSH ownership reset](../../docs/bluetooth-tablet-pairing.md)
 and authorize it again; tablet Bluetooth bonds can remain in place.
 
-For development acceptance on a headset that already uses `TabletSetup`,
-configure CMake with
-`-DPLANK_SETUP_BUNDLE_ID=la.instinctual.PLANK.TabletSetup`. This builds an update
-to that existing app, retaining its container and default private Keychain
-group and `la.instinctual.PLANK.TabletSetup.pairing.v1` service. The receipt
-group remains separate. Pass the same identity through
-`--bundle-id` to both bundle and development-signature checkers. The default
-release identity remains `AVPrelay`; this option does not migrate approval
-between identities. Avoid installing both identities together: they register
-the same `plank-relay-setup` URL scheme.
+Only `la.instinctual.PLANK.AVPrelay` is supported by current builds and validators.
+Updates retain its existing pairing namespace. The separate
+`la.instinctual.PLANK.DrawingRegistration` Keychain group contains public
+registration receipts used by Setup and the matching PLANK Vision Client;
+private identity keys remain in each app's original group. Both apps must be
+signed with provisioning that permits that shared group.
 
 Complete these gates before promising an invitation:
 
@@ -570,6 +566,8 @@ in [the tablet enrollment guide](../../docs/bluetooth-tablet-pairing.md).
 ## Register a drawing relay with PLANK
 
 After authorization and a tablet test, stop the test and select **Use in PLANK**.
-Setup shows its own verified control connection separately from the tablet link
-and the network drawing route. See [the handoff guide](../../docs/plank-drawing-handoff.md)
+Setup shows its verified control connection separately from the tablet link
+and PLANK drawing connection. The matching Client offers Automatic, Bluetooth,
+or Network for each registered relay. For first-time registration, continue in
+Setup and choose **Allow PLANK**; no tablet button sequence is required. See [the handoff guide](../../docs/plank-drawing-handoff.md)
 for the required raw service and Client versions, trust boundary and acceptance pass.
