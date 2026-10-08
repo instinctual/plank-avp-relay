@@ -1,6 +1,6 @@
 # PLANK AVP Relay and Setup app
 
-## Current state — preparing 0.6.8 / build 40
+## Current state — 0.6.8 / build 40 released October 7, 2026
 
 The operator approved integration of upstream PR #4, removal of the retired
 TabletSetup build identity, and a coordinated app/relay build and release.
@@ -12,10 +12,47 @@ requirement is build 46 / publication `5f2d28a10a0a1a113b7618bcf4e7b1e521f00725`
 Version 0.6.8 keeps only `la.instinctual.PLANK.AVPrelay`, preserves its existing
 pairing storage, and retains the public DrawingRegistration group needed for
 Allow PLANK. The package includes both management and raw drawing services.
-Fresh release builds, archive/export, upload and metadata verification are
-pending. No live relay upgrade or headset ownership reset is authorized by
-this release preparation. Fully wireless Wacom plus isolated Bluetooth drawing
-remains a separate hardware qualification; record it honestly in release notes.
+Release source `c01337380bb19131980956d0e3e373e063dc1c1b` is committed and pushed
+to `main`, and tagged `v0.6.8`. Both the Setup app and Linux installers were built
+from that exact source; subsequent documentation commits do not change their
+provenance.
+
+[GitHub release v0.6.8](https://github.com/instinctual/plank-avp-relay/releases/tag/v0.6.8)
+contains the regular Ubuntu Server 26.04 amd64 and Debian 13 / Armbian arm64
+installers, architecture provenance, checksums and source commit. Every uploaded
+asset digest matches its local file. No dbgsym package was built or published.
+Local installers are only in `artifacts/deb/0.6.8/<platform>/<architecture>/`;
+release metadata and native validation logs are in `artifacts/releases/0.6.8/`.
+
+TestFlight: PLANK AVP Relay, bundle `la.instinctual.PLANK.AVPrelay`, app record
+`6818323499`, version 0.6.8, build 40. Upload succeeded October 8 at 00:50:42 UTC
+(October 7 locally). Apple reports VALID and IN_BETA_TESTING internally. The
+notes in `apps/tablet-setup/TestFlight/0.6.8-40.txt` and the confirmed Standard /
+No France compliance baseline were saved and verified. Both existing PLANK
+Testing groups have build access. External distribution was submitted with
+automatic notification enabled; readback is WAITING_FOR_REVIEW /
+WAITING_FOR_BETA_REVIEW. External installation awaits Apple's approval. The
+previous build 39 now reports BETA_REJECTED externally; its older pending-review
+notes below are historical and do not establish external availability.
+
+Validation: [native workflow 37708597656](https://github.com/instinctual/plank-avp-relay/actions/runs/37708597656)
+passes both builds and both clean-install/upgrade/removal jobs, including retained
+state checks. Each architecture passes 37 managed and 26 raw drawing suites plus
+101 libsodium checks. All 27 Apple test suites, macOS and visionOS simulator/device
+builds, signed archive/export, bundle and dSYM validation pass. The exported
+distribution app retains the canonical private Keychain group and authorizes the
+shared DrawingRegistration group; its expanded Info.plist receipt group matches.
+Archive, IPA, hashes, provenance, signing/upload logs and TestFlight readback are
+under `artifacts/testflight/0.6.8/build-40/`. One-time mac12 build/upload jobs were
+unloaded after successful completion.
+
+No live relay upgrade, headset installation or ownership reset was performed in
+this release. Existing 0.6.7 app approvals and tablet bonds are retained on update.
+The separate matching PLANK Vision Client build 46 is required for drawing; this
+release neither publishes that app nor establishes its TestFlight availability.
+Fully wireless Wacom plus isolated Bluetooth drawing remains a separate hardware
+qualification. Previous network-isolation acceptance used a USB tablet. Preserve
+that distinction in future release notes and live testing.
 
 ## Previous release — 0.6.7
 
